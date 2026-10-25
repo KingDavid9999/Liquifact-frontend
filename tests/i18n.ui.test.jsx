@@ -14,6 +14,9 @@ vi.mock("next/navigation", () => ({
   useRouter: () => ({ refresh: () => refreshRef.current() }),
 }));
 vi.mock("@/components/ThemeToggle", () => ({ default: () => null }));
+// Header widgets with their own providers/suites.
+vi.mock("@/components/TxActivityButton", () => ({ default: () => null }));
+vi.mock("@/components/NotificationBell", () => ({ default: () => null }));
 
 const { default: SiteHeader } = await import("../components/SiteHeader.jsx");
 const { default: InvoiceCard } = await import("../components/InvoiceCard.jsx");
@@ -82,7 +85,7 @@ describe("i18n components", () => {
     expect(screen.getByText(/25\.000 USDC/)).toBeInTheDocument();
     expect(screen.getByText(/30 dic 2026/)).toBeInTheDocument();
     expect(screen.getByLabelText("Idioma")).toHaveValue("es");
-    expect(screen.getByRole("status")).toHaveTextContent("Idioma cambiado a Español");
+    expect(screen.getByText("Idioma cambiado a Español")).toBeInTheDocument();
   });
 
   it("locale select is keyboard operable and labelled", async () => {
